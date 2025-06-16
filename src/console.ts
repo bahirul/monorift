@@ -1,5 +1,9 @@
 import { program } from 'commander';
 import { helloWorld } from './app/modules/default/cli/hello';
+import { loadEnv } from './env';
+
+// load env
+loadEnv();
 
 program.name('console.ts').description('Console Command').version('1.0.0');
 

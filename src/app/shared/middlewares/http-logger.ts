@@ -3,9 +3,10 @@
  */
 import { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import appConfig from '../../../config/app';
+import { getAppConfig } from '../../../config/app';
 import { logger } from '../utils/logger';
 
+const appConfig = getAppConfig();
 const httpLoggerMiddleware = [
     morgan(':status :method - :url - :remote-addr - :response-time ms', {
         stream: {

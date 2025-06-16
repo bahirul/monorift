@@ -2,11 +2,12 @@
  * Logger for the application
  */
 import winston from 'winston';
-import appConfig from '../../../config/app';
+import { getAppConfig } from '../../../config/app';
 import { getAlias } from './path-alias';
 
 const { combine, timestamp, printf } = winston.format;
 const timestampFormat = 'DD/MMM/YYYY HH:mm:ss';
+const appConfig = getAppConfig();
 
 // Winston colorize
 winston.addColors({

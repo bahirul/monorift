@@ -42,6 +42,19 @@ This document outlines the high-level directory and file structure of the Monori
 └── tsconfig.json                  # TypeScript compiler configuration
 ```
 
+## Recommendation
+
+In a modular monolith, each module should encapsulate its own responsibilities and dependencies. A well-structured module typically includes:
+
+- Business logic (e.g., services, use cases)
+- API routes and controllers
+- CLI commands (optional)
+- Data access (e.g., repository or model layer)
+- Migrations (if applicable)
+- Event emitters/listeners for internal pub/sub
+- Integrations (3rd party APIs, services)
+- This separation ensures high cohesion within modules and low coupling between them, making your monolith easier to maintain, test, and eventually extract into microservices if needed.
+
 ## Notes
 
 - `src/app/modules/` follows a **modular monolith** pattern: each module is self-contained.

@@ -5,10 +5,15 @@ import defaultRoutes from './app/modules/default/routes/default';
 import httpLoggerMiddleware from './app/shared/middlewares/http-logger';
 import notFoundMiddleware from './app/shared/middlewares/not-found';
 import { logger } from './app/shared/utils/logger';
-import appConfig from './config/app';
+import { getAppConfig } from './config/app';
+import { loadEnv } from './env';
+
+// load env
+loadEnv();
 
 // create express app
 const app = express();
+const appConfig = getAppConfig();
 const port = appConfig.port;
 
 // middlewares

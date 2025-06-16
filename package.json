@@ -2,8 +2,8 @@
   "name": "monorift",
   "version": "0.0.1",
   "scripts": {
-    "start": "node ./dist/server.js",
-    "dev": "nodemon ./src/server.ts",
+    "start": "node ./dist/http.js",
+    "dev": "nodemon ./src/http.ts",
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
