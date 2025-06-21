@@ -9,6 +9,5 @@ const defaultRoutes = Router();
 
 // GET /
 defaultRoutes.get('/', getDefaultAction);
-defaultRoutes.post('/', getDefaultAction);
 
 export default defaultRoutes;
