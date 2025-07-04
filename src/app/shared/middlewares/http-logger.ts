@@ -3,10 +3,10 @@
  */
 import { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { getAppConfig } from '../../../config/app';
-import { logger } from '../utils/logger';
+import { loadConfig } from '../../config/app.js';
+import { logger } from '../utils/logger.js';
 
-const appConfig = getAppConfig();
+const appConfig = loadConfig();
 const httpLoggerMiddleware = [
     morgan(':status :method - :url - :remote-addr - :response-time ms', {
         stream: {
@@ -14,7 +14,7 @@ const httpLoggerMiddleware = [
         },
     }),
     function logRequestBody(req: Request, _res: Response, next: NextFunction) {
-        if (appConfig.log.level === 'debug') {
+        if (appConfig.app.logLevel === 'debug') {
             const shouldLog =
                 req.method === 'POST' ||
                 req.method === 'PUT' ||

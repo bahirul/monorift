@@ -1,29 +1,26 @@
 import cors from 'cors';
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
-import defaultRoutes from './app/modules/default/routes/default';
-import httpLoggerMiddleware from './app/shared/middlewares/http-logger';
-import notFoundMiddleware from './app/shared/middlewares/not-found';
-import { logger } from './app/shared/utils/logger';
-import { getAppConfig } from './config/app';
-import { loadEnv } from './env';
-
-// load env
-loadEnv();
+import { loadConfig } from './app/config/app.js';
+import defaultRoutes from './app/modules/main/routes/main.js';
+import httpLoggerMiddleware from './app/shared/middlewares/http-logger.js';
+import notFoundMiddleware from './app/shared/middlewares/not-found.js';
+import { logger } from './app/shared/utils/logger.js';
 
 // create express app
 const app = express();
-const appConfig = getAppConfig();
-const port = appConfig.port;
+const appConfig = loadConfig();
+const port = appConfig.app.port || 50002;
 
 // middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(httpLoggerMiddleware);
 app.use(
     cors({
-        credentials: true, // enable credentials for cookies
-        origin: true, // allow all origins
+        credentials: appConfig.cors.credentials || false,
+        origin: appConfig.cors.origin || true,
     }),
 );
 
@@ -38,7 +35,8 @@ app.use((err: Error, req: Request, res: Response) => {
     logger.error({
         action: 'errorHandler',
         message: (err as Error)?.message,
-        stack: appConfig.env === 'development' ? (err as Error)?.stack : null,
+        stack:
+            appConfig.app.env === 'development' ? (err as Error)?.stack : null,
     });
 
     res.status(500).json({

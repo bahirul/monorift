@@ -1,9 +1,5 @@
 import { program } from 'commander';
-import { helloWorld } from './app/modules/default/cli/hello';
-import { loadEnv } from './env';
-
-// load env
-loadEnv();
+import { helloWorld } from './app/modules/main/cli/hello.js';
 
 program.name('console.ts').description('Console Command').version('1.0.0');
 
@@ -13,4 +9,5 @@ program
     .description('Prints "hello world" from default module')
     .action(helloWorld);
 
+// Parse the command line arguments
 program.parse(process.argv);

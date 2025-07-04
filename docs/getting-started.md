@@ -39,53 +39,19 @@ npm run build
 npm start
 ```
 
-## Project Structure
-
-Here's a quick look at the default folder layout:
-
-```
-my-app/
-├── bin/                    # CLI scripts (e.g., create project command)
-├── docs/                   # Project documentation
-├── logs/                   # Runtime and error logs
-├── src/                    # Application source code
-│   ├── app/
-│   │   ├── modules/        # Feature modules (e.g., default)
-│   │   │   └── default/
-│   │   │       ├── cli/            # Module-specific CLI commands
-│   │   │       ├── controllers/    # Business logic handlers
-│   │   │       └── routes/         # Express route definitions
-│   │   └── shared/         # Common code reused across modules
-│   │       ├── middlewares/       # Express middlewares (error handling, logging)
-│   │       └── utils/             # Helper functions and tools
-│   ├── config/             #  Application configuration
-│   ├── console.ts          # Entrypoint for CLI tools
-│   └── env.ts              # Environment loading script
-│   └── server.ts           # Entrypoint for HTTP server
-├── .env.development.example    # Enviroment file example
-├── .gitignore              # .gitignore 
-├── .prettierrc             # Prettier rules
-├── .eslint.config.mjs      # Linting rules
-├── LICENSE                 # Project license
-├── README.md               # Project overview
-├── package.json            # Dependencies and scripts
-├── tsconfig.json           # TypeScript compiler config
-```
-
-## Environment Variables
+## Configuration files
 
 To get started, copy the example file:
 
 ```bash
-cp .env.development.example .env
+cp example.config.yaml config.yaml
 ```
 
-You can maintain separate environment files for different stages:
-- `.env.development` – for development
-- `.env.prodcution` – for procution
+You can maintain separate configuration files for different stages:
+- `config.development.yaml` – for development
+- `config.production.yaml` – for production
 
-
-You can extend this as needed (e.g., add DB connection strings, secrets, etc.).
+`config/app.ts` will automatically load the appropriate configuration file based on the `NODE_ENV` environment variable.
 
 ## Next Steps
 

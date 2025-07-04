@@ -9,32 +9,31 @@ This document outlines the high-level directory and file structure of the Monori
 │   └── README.md                  # Documentation overview
 ├── logs/                          # Generated log folder
 │   ├── app/
-│   │   ├── modules/               # Feature modules
-│   │   │   └── default/           # Default example module
-│   │   │       ├── cli/           # CLI commands for the module
+│   │   ├── config/
+│   │   │   └── app.ts               # App-level configuration
+│   │   ├── modules/                 # Feature modules
+│   │   │   └── default/             # Default example module
+│   │   │       ├── cli/             # CLI commands for the module
 │   │   │       │   └── hello.ts
-│   │   │       ├── controllers/   # Controllers (business logic)
+│   │   │       ├── controllers/       # Controllers (business logic)
 │   │   │       │   └── default.ts
-│   │   │       └── routes/        # API route definitions
+│   │   │       └── routes/            # API route definitions
 │   │   │           └── default.ts
-│   │   └── shared/                # Shared resources
-│   │       ├── middlewares/       # Express middlewares
+│   │   └── shared/                    # Shared resources
+│   │       ├── middlewares/           # Express middlewares
 │   │       │   ├── http-logger.ts
 │   │       │   ├── malformed.ts
 │   │       │   └── not-found.ts
-│   │       └── utils/             # Utility functions
+│   │       └── utils/                 # Utility functions
 │   │           ├── jsend.ts
 │   │           ├── logger.ts
 │   │           └── path-alias.ts
-│   ├── config/
-│   │   └── app.ts                 # App-level configuration
-│   ├── console.ts                 # CLI entry point
-│   └── env.ts                      # Environment loading script
-│   └── server.ts                  # HTTP server entry point
-├── .env.development.example       # Example env file for development
+│   ├── console.ts                     # CLI entry point
+│   └── server.ts                      # HTTP server entry point
 ├── .gitignore                     # Git ignore rules
 ├── .prettierrc                    # Prettier code formatting configuration
 ├── eslint.config.mjs              # ESLint config (modular)
+├── example.config.yaml               # Example config file for development
 ├── LICENSE                        # Project license
 ├── package-lock.json              # NPM lockfile for dependency consistency
 ├── package.json                   # Project metadata and dependencies

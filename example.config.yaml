@@ -1,0 +1,10 @@
+# This is an example configuration file for a hypothetical application.
+app:
+  id: monorift
+  debug: true
+  port: 50002
+
+# Cross-Origin Resource Sharing (CORS) configuration
+cors:
+  credentials: true # enable credentials for cookies
+  origin: true # allow all origins

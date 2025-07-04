@@ -27,6 +27,8 @@ See the [package.json](package.json) for a full list of dependencies.
 
 ## Documentation
 
+⚠️ WARNING: This project is still in development, and the documentation is not complete yet.
+
 Full documentation is available in the [docs](docs) directory.
 
 

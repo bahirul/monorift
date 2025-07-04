@@ -2,12 +2,12 @@
  * Logger for the application
  */
 import winston from 'winston';
-import { getAppConfig } from '../../../config/app';
-import { getAlias } from './path-alias';
+import { loadConfig } from '../../config/app.js';
+import { getAlias } from './path-alias.js';
 
 const { combine, timestamp, printf } = winston.format;
 const timestampFormat = 'DD/MMM/YYYY HH:mm:ss';
-const appConfig = getAppConfig();
+const appConfig = loadConfig();
 
 // Winston colorize
 winston.addColors({
@@ -21,7 +21,7 @@ winston.addColors({
 });
 
 export const logger = winston.createLogger({
-    level: appConfig.log.level,
+    level: appConfig.app.logLevel || 'info',
     transports: [
         new winston.transports.File({
             filename: getAlias('@logs/error.log'),
