@@ -35,8 +35,7 @@ app.use((err: Error, req: Request, res: Response) => {
     logger.error({
         action: 'errorHandler',
         message: (err as Error)?.message,
-        stack:
-            appConfig.app.env === 'development' ? (err as Error)?.stack : null,
+        stack: appConfig.app.debug ? (err as Error)?.stack : null,
     });
 
     res.status(500).json({

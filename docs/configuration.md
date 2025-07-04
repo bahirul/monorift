@@ -1,42 +1,114 @@
-# Application Configuration
+-----
 
-This project uses a centralized configuration system to manage all settings. The goal is to keep configuration logic in a single place and prevent scattering process.env access across the codebase.
+# Configuration
 
-## Default Configuration
+This document outlines the configuration options for the `monorift` project, a modular monolith Express.js application.
 
-Configuration variables are accessed and processed in:
+The project uses YAML files for environment-specific configurations, which are loaded through `src/app/config/app.ts`.
 
-```bash
-src/config/app.ts
+-----
+
+## Configuration Files
+
+The application looks for configuration files in the root directory of the project. The primary configuration file is `config.yaml`. For specific environments, it will attempt to load `config.development.yaml` or `config.production.yaml` if they exist. If an environment-specific file is not found, it falls back to `config.yaml`.
+
+  * **`config.yaml`**: The default configuration file.
+  * **`config.development.yaml`**: Overrides `config.yaml` values for the `development` environment.
+  * **`config.production.yaml`**: Overrides `config.yaml` values for the `production` environment.
+
+-----
+
+## Environment Variables
+
+The application's behavior is influenced by the `NODE_ENV` environment variable, which determines which configuration file to load.
+
+  * **`NODE_ENV`**: Set to `development` for local development or `production` for production deployments. If not set, it defaults to `development`.
+
+-----
+
+## Application Configuration (`app.ts`)
+
+The `src/app/config/app.ts` file defines the structure and loading mechanism for the application's configuration.
+
+### AppConfig Interface
+
+The `AppConfig` interface defines the expected structure of the configuration.
+
+```typescript
+interface AppConfig {
+    app: {
+        id: string;
+        env: string;
+        debug: boolean;
+        port: number;
+        logLevel: string;
+    };
+    cors: {
+        credentials: boolean; // enable credentials for cookies
+        origin: boolean; // allow all origins
+    };
+}
 ```
 
-This file reads values from `config.yaml` and sets up the application configuration. It uses the `loadConfig()` function in `config/app.ts` to load configuration variables.
+### Configuration Properties
 
-## Environment Configuration
+Here's a breakdown of the configuration properties:
 
-You can maintain separate configuration files for different stages:
-- `config.development.yaml` – for development
-- `config.production.yaml` – for production
+#### `app`
 
-`config/app.ts` will automatically load the appropriate configuration file based on the `NODE_ENV` environment variable.
+| Property   | Type      | Description                                                                  | Default (if not specified in files) |
+| :--------- | :-------- | :--------------------------------------------------------------------------- | :---------------------------------- |
+| `id`       | `string`  | Unique identifier for the application.                                       | N/A                                 |
+| `env`      | `string`  | The current environment (`development`, `production`).                       | Determined by `NODE_ENV`            |
+| `debug`    | `boolean` | Enables or disables debug-specific features (e.g., detailed error stacks).   | N/A                                 |
+| `port`     | `number`  | The port on which the Express.js server will listen.                         | `50002`                             |
+| `logLevel` | `string`  | The minimum level of logs to display (e.g., `info`, `debug`, `error`).       | `info`                              |
 
-## Extending Configuration
+#### `cors`
 
-You can create additional configuration files under src/config as needed.
+| Property      | Type      | Description                                                | Default (if not specified in files) |
+| :------------ | :-------- | :--------------------------------------------------------- | :---------------------------------- |
+| `credentials` | `boolean` | Specifies whether CORS requests should include credentials. | `false`                             |
+| `origin`      | `boolean` | Specifies the allowed origins for CORS requests. `true` allows all. | `true`                              |
 
-For example:
+-----
 
-```bash
-src/config/database.ts
-src/config/logger.ts
-```
+## Logging Configuration (`logger.ts`)
 
-If a file depends on configuration variables, make sure to call `loadConfig()` from `config/app.ts` to ensure all configuration variables are loaded before accessing them.
+The application uses `winston` for logging, configured in `src/app/shared/utils/logger.ts`. The logging behavior is influenced by the `app.logLevel` setting from the main application configuration.
 
-To get started, copy the example file:
+### Log Levels
 
-```bash
-cp example.config.yaml config.yaml
-```
+The following log levels are supported: `error`, `warn`, `info`, `http`, `verbose`, `debug`, `silly`. The `app.logLevel` setting determines the minimum level of messages that will be logged.
 
-Feel free to extend these variables as needed. When you add new keys, make sure to update your config files to include them.
+### Log Outputs
+
+Logs are output to:
+
+  * **Console**: All logs at or above the configured `logLevel`.
+  * **`logs/error.log`**: Only `error` level logs.
+  * **`logs/app.log`**: All logs at or above the configured `logLevel`.
+
+-----
+
+## HTTP Request Logging (`http-logger.ts`)
+
+The `src/app/shared/middlewares/http-logger.ts` middleware uses `morgan` to log HTTP requests.
+
+  * **Request Body Logging**: If `app.logLevel` is set to `debug`, the middleware will log the request body for `POST`, `PUT`, and `PATCH` requests. This is useful for debugging but should be avoided in production environments due to potential sensitive data exposure and performance overhead.
+
+-----
+
+## Path Aliases (`path-alias.ts`)
+
+The `src/app/shared/utils/path-alias.ts` file defines aliases to simplify module imports. These aliases help in maintaining a clean and organized project structure, especially in larger applications.
+
+| Alias   | Resolves To                      | Description                                   |
+| :------ | :------------------------------- | :-------------------------------------------- |
+| `@root` | `../../../../` (project root)    | Points to the root directory of the project.  |
+| `@src`  | `../../../../src` (src directory) | Points to the `src` directory.                |
+| `@logs` | `../../../../logs` (logs directory) | Points to the `logs` directory for log files. |
+
+For example, `getAlias('@logs/error.log')` will resolve to the actual path of `logs/error.log` relative to the project root.
+
+-----

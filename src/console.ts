@@ -5,8 +5,8 @@ program.name('console.ts').description('Console Command').version('1.0.0');
 
 // register the command. use format: <module>/<command>
 program
-    .command('default/hello-world')
-    .description('Prints "hello world" from default module')
+    .command('main/hello-world')
+    .description('Prints "hello world" from main module')
     .action(helloWorld);
 
 // Parse the command line arguments

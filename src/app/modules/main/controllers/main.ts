@@ -5,7 +5,7 @@ import { jsendSuccess } from '../../../shared/utils/jsend.js';
 export const getMainAction = async (req: Request, res: Response) => {
     res.json(
         jsendSuccess({
-            message: 'hello world',
+            message: 'OK!',
         }),
     );
 };

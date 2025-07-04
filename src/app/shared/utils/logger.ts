@@ -21,7 +21,7 @@ winston.addColors({
 });
 
 export const logger = winston.createLogger({
-    level: appConfig.app.logLevel || 'info',
+    level: appConfig.app.logLevel,
     transports: [
         new winston.transports.File({
             filename: getAlias('@logs/error.log'),
