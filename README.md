@@ -177,3 +177,31 @@ For detailed documentation on how to use the project, refer to the following fil
 ## Dependencies
 
 Please refer to the `package.json` file for a complete list of dependencies.
+
+
+## Contributing to Repository Content Generator
+
+Want to help make this project better? Awesome\! Here's how you can contribute.
+
+-----
+
+### Found a Bug?
+
+If something's broken, please [open an issue](https://github.com/bahirul/monorift/issues) on GitHub. Tell us what went wrong and how we can see it too.
+
+### Have an Idea?
+
+Got a suggestion for a new feature or an improvement? [Open an issue](https://github.com/bahirul/monorift/issues) and share your thoughts\!
+
+### Want to Code?
+
+If you'd like to write code to fix a bug or add a feature:
+
+1.  **Fork** this project.
+2.  **Clone** your copy to your computer.
+3.  **Create a new branch** for your changes.
+4.  **Make your changes**.
+5.  **Test your code**.
+6.  **Commit** your changes with a clear message.
+7.  **Push** your branch.
+8.  **Open a Pull Request** to our main project. Explain what you did\!
