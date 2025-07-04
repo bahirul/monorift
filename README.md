@@ -177,9 +177,3 @@ For detailed documentation on how to use the project, refer to the following fil
 ## Dependencies
 
 Please refer to the `package.json` file for a complete list of dependencies.
-
-## License
-
-This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for details.
-
-
