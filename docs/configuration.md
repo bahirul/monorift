@@ -1,114 +1,86 @@
------
-
 # Configuration
 
-This document outlines the configuration options for the `monorift` project, a modular monolith Express.js application.
-
-The project uses YAML files for environment-specific configurations, which are loaded through `src/app/config/app.ts`.
-
------
+The project uses YAML files for configuration, located at the root level. The configuration is loaded using the `loadConfig` function in `src/app/config/app.ts`.
 
 ## Configuration Files
 
-The application looks for configuration files in the root directory of the project. The primary configuration file is `config.yaml`. For specific environments, it will attempt to load `config.development.yaml` or `config.production.yaml` if they exist. If an environment-specific file is not found, it falls back to `config.yaml`.
+-   `config.yaml`: The default configuration file.
+-   `config.development.yaml`: Overrides settings for the development environment.
+-   `config.production.yaml`: Overrides settings for the production environment.
 
-  * **`config.yaml`**: The default configuration file.
-  * **`config.development.yaml`**: Overrides `config.yaml` values for the `development` environment.
-  * **`config.production.yaml`**: Overrides `config.yaml` values for the `production` environment.
+The `NODE_ENV` environment variable determines which configuration file is loaded. If a specific environment file is not found, it falls back to `config.yaml`.
 
------
+## Configuration Parameters
 
-## Environment Variables
+Key configuration parameters are defined in `src/app/config/app.ts`:
 
-The application's behavior is influenced by the `NODE_ENV` environment variable, which determines which configuration file to load.
+### `app.id`
 
-  * **`NODE_ENV`**: Set to `development` for local development or `production` for production deployments. If not set, it defaults to `development`.
+-   **Type**: `string`
+-   **Description**: A unique identifier for the application.
+-   **Example**: `monorift-app`
 
------
+### `app.env`
 
-## Application Configuration (`app.ts`)
+-   **Type**: `string`
+-   **Description**: The application environment. Can be `development` or `production`.
+-   **Example**: `development`
 
-The `src/app/config/app.ts` file defines the structure and loading mechanism for the application's configuration.
+### `app.debug`
 
-### AppConfig Interface
+-   **Type**: `boolean`
+-   **Description**: Enables or disables debug mode. When enabled, the error handler will include the stack trace in the response.
+-   **Example**: `true`
 
-The `AppConfig` interface defines the expected structure of the configuration.
+### `app.port`
 
-```typescript
-interface AppConfig {
-    app: {
-        id: string;
-        env: string;
-        debug: boolean;
-        port: number;
-        logLevel: string;
-    };
-    cors: {
-        credentials: boolean; // enable credentials for cookies
-        origin: boolean; // allow all origins
-    };
-}
+-   **Type**: `number`
+-   **Description**: The port on which the Express server will listen.
+-   **Example**: `50002`
+
+### `app.logLevel`
+
+-   **Type**: `string`
+-   **Description**: The minimum log level for the application. The available levels are `error`, `warn`, `info`, `http`, `verbose`, `debug`, and `silly`.
+-   **Example**: `debug`
+
+### `cors.credentials`
+
+-   **Type**: `boolean`
+-   **Description**: Enables or disables the `Access-Control-Allow-Credentials` header.
+-   **Example**: `true`
+
+### `cors.origin`
+
+-   **Type**: `boolean` or `string[]`
+-   **Description**: Specifies the allowed origins for CORS. Can be `true` (allow all), `false` (no CORS), or an array of allowed origins.
+-   **Example**: `true` or `["http://localhost:3000"]`
+
+## Example Configuration
+
+### `config.yaml`
+
+```yaml
+app:
+  id: "monorift-app"
+  env: "development"
+  debug: true
+  port: 50002
+  logLevel: "debug"
+
+cors:
+  credentials: true
+  origin: true
 ```
 
-### Configuration Properties
+### `config.production.yaml`
 
-Here's a breakdown of the configuration properties:
+```yaml
+app:
+  env: "production"
+  debug: false
+  logLevel: "info"
 
-#### `app`
-
-| Property   | Type      | Description                                                                  | Default (if not specified in files) |
-| :--------- | :-------- | :--------------------------------------------------------------------------- | :---------------------------------- |
-| `id`       | `string`  | Unique identifier for the application.                                       | N/A                                 |
-| `env`      | `string`  | The current environment (`development`, `production`).                       | Determined by `NODE_ENV`            |
-| `debug`    | `boolean` | Enables or disables debug-specific features (e.g., detailed error stacks).   | N/A                                 |
-| `port`     | `number`  | The port on which the Express.js server will listen.                         | `50002`                             |
-| `logLevel` | `string`  | The minimum level of logs to display (e.g., `info`, `debug`, `error`).       | `info`                              |
-
-#### `cors`
-
-| Property      | Type      | Description                                                | Default (if not specified in files) |
-| :------------ | :-------- | :--------------------------------------------------------- | :---------------------------------- |
-| `credentials` | `boolean` | Specifies whether CORS requests should include credentials. | `false`                             |
-| `origin`      | `boolean` | Specifies the allowed origins for CORS requests. `true` allows all. | `true`                              |
-
------
-
-## Logging Configuration (`logger.ts`)
-
-The application uses `winston` for logging, configured in `src/app/shared/utils/logger.ts`. The logging behavior is influenced by the `app.logLevel` setting from the main application configuration.
-
-### Log Levels
-
-The following log levels are supported: `error`, `warn`, `info`, `http`, `verbose`, `debug`, `silly`. The `app.logLevel` setting determines the minimum level of messages that will be logged.
-
-### Log Outputs
-
-Logs are output to:
-
-  * **Console**: All logs at or above the configured `logLevel`.
-  * **`logs/error.log`**: Only `error` level logs.
-  * **`logs/app.log`**: All logs at or above the configured `logLevel`.
-
------
-
-## HTTP Request Logging (`http-logger.ts`)
-
-The `src/app/shared/middlewares/http-logger.ts` middleware uses `morgan` to log HTTP requests.
-
-  * **Request Body Logging**: If `app.logLevel` is set to `debug`, the middleware will log the request body for `POST`, `PUT`, and `PATCH` requests. This is useful for debugging but should be avoided in production environments due to potential sensitive data exposure and performance overhead.
-
------
-
-## Path Aliases (`path-alias.ts`)
-
-The `src/app/shared/utils/path-alias.ts` file defines aliases to simplify module imports. These aliases help in maintaining a clean and organized project structure, especially in larger applications.
-
-| Alias   | Resolves To                      | Description                                   |
-| :------ | :------------------------------- | :-------------------------------------------- |
-| `@root` | `../../../../` (project root)    | Points to the root directory of the project.  |
-| `@src`  | `../../../../src` (src directory) | Points to the `src` directory.                |
-| `@logs` | `../../../../logs` (logs directory) | Points to the `logs` directory for log files. |
-
-For example, `getAlias('@logs/error.log')` will resolve to the actual path of `logs/error.log` relative to the project root.
-
------
+cors:
+  origin: ["https://your-production-domain.com"]
+```

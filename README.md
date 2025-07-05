@@ -2,37 +2,32 @@
 
 Monorift is an Express.js-based project designed with a modular monolith architecture. It aims to provide a structured and scalable foundation for building RESTful APIs using Node.js and TypeScript, emphasizing organization and maintainability through distinct modules and shared utilities.
 
-## Features
+## Getting Started
 
-* **Modular Architecture**: Organizes features into independent modules, promoting code reusability and separation of concerns.
-* **Express.js Framework**: Leverages the robust and flexible Express.js for building web applications and APIs.
-* **TypeScript Support**: Enhances code quality, readability, and maintainability with static typing.
-* **Configuration Management**: Handles environment-specific configurations using YAML files.
-* **Centralized Logging**: Provides a unified logging mechanism with different log levels and file/console outputs.
-* **HTTP Request Logging**: Includes a middleware for logging incoming HTTP requests.
-* **Error Handling**: Implements middleware for catching 404 (Not Found) errors and general internal server errors, as well as malformed request errors.
-* **CORS and Security**: Configures Cross-Origin Resource Sharing (CORS) and utilizes Helmet for enhanced security.
-* **CLI Commands**: Supports command-line interface (CLI) commands for various utilities.
-* **Path Aliasing**: Simplifies module imports with predefined path aliases.
-* **JSend Response Formatting**: Adheres to the JSend specification for consistent API responses.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
----
+### Prerequisites
 
-## Installation
+What things you need to install the software and how to install them:
 
-To set up the project, follow these steps:
+*   [Node.js](https://nodejs.org/)
+*   [npm](https://www.npmjs.com/)
 
-1.  **Clone the repository**:
+### Installing
+
+A step-by-step series of examples that tell you how to get a development environment running:
+
+1.  **Clone the repository**
     ```bash
-    git clone <your-repository-url>
+    git clone https://github.com/bahirul/monorift.git
     cd monorift
     ```
-2.  **Install dependencies**:
+2.  **Install dependencies**
     ```bash
     npm install
     ```
-3.  **Create configuration files**:
-    The project uses `config.yaml` for default settings and `config.production.yaml` or `config.development.yaml` for environment-specific overrides. You can start by copying the `config.example.yaml` () or creating your own.
+3.  **Create configuration files**
+    The project uses `config.yaml` for default settings and `config.production.yaml` or `config.development.yaml` for environment-specific overrides. You can start by copying the `example.config.yaml` or creating your own.
     
     Example `config.yaml`:
     ```yaml
@@ -47,8 +42,6 @@ To set up the project, follow these steps:
       credentials: true
       origin: true # set to true to allow all, or specify an array of origins
     ```
-
----
 
 ## Usage
 
@@ -97,7 +90,7 @@ Response:
 }
 ```
 
-## Folder Structure
+## Project Structure
 
 The project follows a structured folder layout to maintain clarity and organization. Below is an overview of the key directories and files:
 
@@ -134,74 +127,11 @@ The project follows a structured folder layout to maintain clarity and organizat
 └── .gitignore                         # Git ignore file
 ```
 
-## Configuration
-
-The project uses YAML files for configuration, located at the root level.
-
-- `config.yaml`: The default configuration file.
-- `config.development.yaml`: Overrides settings for the development environment.
-- `config.production.yaml`: Overrides settings for the production environment.
-
-The NODE_ENV environment variable determines which configuration file is loaded. If a specific environment file is not found, it falls back to config.yaml.
-
-Key configuration parameters defined in `src/app/config/app.ts`:
-
-- `app.id`: Application identifier.
-- `app.env`: Application environment (development or production).
-- `app.debug`: Enables/disables debug mode.
-- `app.port`: The port on which the Express server will listen.
-- `app.logLevel`: Minimum log level for the application (e.g., info, debug, error).
-- `cors.credentials`: Enables or disables Access-Control-Allow-Credentials.
-- `cors.origin`: Specifies allowed origins for CORS. Can be true (allow all), false (no CORS), or an array of allowed origins.
-
-
-## Scripts or Commands
-
-The package.json file defines several useful scripts:
-
-- `npm start`: Starts the compiled Node.js server (after running npm run build).
-- `npm run dev`: Starts the development server with nodemon and tsx for hot-reloading and TypeScript compilation on the fly.
-- `npm run clean`: Removes the dist directory.
-- `npm run build`: Cleans the dist directory and then compiles the TypeScript code to JavaScript.
-- `npm test`: Placeholder for running tests.
-
 ## Documentation
 
-For detailed documentation on how to use the project, refer to the following files:
+For detailed documentation on various aspects of the project, refer to the following sections:
 
-- [docs/configuration.md](docs/configuration.md): Guide on configuring the application, including environment-specific settings.
-- [docs/lifecycle.md](docs/lifecycle.md): Overview of the application lifecycle, including startup and shutdown processes.
-- [docs/error.handling.md](docs/error.handling.md): Explanation of error handling strategies, including middleware for catching errors and formatting responses.
-- [docs/routing.md](docs/routing.md): Information on how to define and register routes for both HTTP and CLI commands.
-
-## Dependencies
-
-Please refer to the `package.json` file for a complete list of dependencies.
-
-
-## Contributing to Repository Content Generator
-
-Want to help make this project better? Awesome\! Here's how you can contribute.
-
------
-
-### Found a Bug?
-
-If something's broken, please [open an issue](https://github.com/bahirul/monorift/issues) on GitHub. Tell us what went wrong and how we can see it too.
-
-### Have an Idea?
-
-Got a suggestion for a new feature or an improvement? [Open an issue](https://github.com/bahirul/monorift/issues) and share your thoughts\!
-
-### Want to Code?
-
-If you'd like to write code to fix a bug or add a feature:
-
-1.  **Fork** this project.
-2.  **Clone** your copy to your computer.
-3.  **Create a new branch** for your changes.
-4.  **Make your changes**.
-5.  **Test your code**.
-6.  **Commit** your changes with a clear message.
-7.  **Push** your branch.
-8.  **Open a Pull Request** to our main project. Explain what you did\!
+- [Configuration](docs/configuration.md): Learn how to configure the application using YAML files.
+- [Routing](docs/routing.md): Understand how routing is implemented in the application.
+- [Application Lifecycle](docs/lifecycle.md): Explore the lifecycle of the application from startup to shutdown.
+- [Error Handling](docs/error.handling.md): Learn about the error handling mechanisms in
