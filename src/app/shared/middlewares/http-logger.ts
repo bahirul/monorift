@@ -14,7 +14,7 @@ const httpLoggerMiddleware = [
         },
     }),
     function logRequestBody(req: Request, _res: Response, next: NextFunction) {
-        if (appConfig.app.logLevel === 'debug') {
+        if (appConfig.app.debug) {
             const shouldLog =
                 req.method === 'POST' ||
                 req.method === 'PUT' ||
@@ -22,7 +22,7 @@ const httpLoggerMiddleware = [
 
             if (shouldLog) {
                 logger.debug(
-                    `📦 body request for ${req.method} ${req.originalUrl}\n` +
+                    `body request for ${req.method} ${req.originalUrl}\n` +
                         JSON.stringify(req.body, null, 2),
                 );
             }

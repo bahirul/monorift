@@ -1,13 +1,10 @@
-/**
- * main module routes definition
- */
 import { Router } from 'express';
 import { getMainAction } from '../controllers/main.js';
 
-// Create a new router
+// main routes
 const mainRoutes = Router();
 
-// GET /
+// register main routes
 mainRoutes.get('/', getMainAction);
 
 export default mainRoutes;

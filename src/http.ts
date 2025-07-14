@@ -46,5 +46,5 @@ app.use((err: Error, req: Request, res: Response) => {
 
 // start server
 app.listen(port, () => {
-    logger.info(`✅ server listen on port ${port}`);
+    logger.info(`server listen on port http://localhost:${port}`);
 });

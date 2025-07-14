@@ -6,52 +6,53 @@ import { parse } from 'yaml';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Define the structure of the application configuration
+// define the structure of the application configuration
 interface AppConfig {
     app: {
         id: string;
         env: string;
         debug: boolean;
         port: number;
-        logLevel: string;
+        logLevel:
+            | 'info'
+            | 'debug'
+            | 'warn'
+            | 'error'
+            | 'silly'
+            | 'http'
+            | 'verbose';
     };
 
     cors: {
         credentials: boolean; // enable credentials for cookies
-        origin: boolean; // allow all origins
+        origin: boolean | string | string[]; // allow all origins or specific ones
     };
 }
 
-// Function to get the configuration based on the environment
+// get the configuration based on the environment
 function getConfigByEnv(env: string): AppConfig {
-    let configPath = path.resolve(__dirname, '../../../config.yaml');
+    const defaultConfigPath = path.resolve(__dirname, '../../../config.yaml');
+    const envConfigPath = path.resolve(
+        __dirname,
+        `../../../config.${env}.yaml`,
+    );
 
-    if (env === 'production') {
-        configPath = path.resolve(__dirname, '../../../config.production.yaml');
-        if (!fs.existsSync(configPath)) {
-            console.warn(
-                `⚠️ Production config file not found, falling back to default: ${configPath}`,
-            );
-            configPath = path.resolve(__dirname, '../../../config.yaml');
-        }
-    }
+    let configPath = defaultConfigPath;
 
-    if (env === 'development') {
-        configPath = path.resolve(
-            __dirname,
-            '../../../config.development.yaml',
+    // Check for environment-specific config file
+    if (env !== 'development' && fs.existsSync(envConfigPath)) {
+        configPath = envConfigPath;
+    } else if (env !== 'development') {
+        console.warn(
+            `⚠️ ${env} config file not found, falling back to default: ${envConfigPath}`,
         );
-        if (!fs.existsSync(configPath)) {
-            console.warn(
-                `⚠️ Development config file not found, falling back to default: ${configPath}`,
-            );
-            configPath = path.resolve(__dirname, '../../../config.yaml');
-        }
     }
 
     if (!fs.existsSync(configPath)) {
-        throw new Error(`🔥 Configuration file not found: ${configPath}`);
+        console.error(`🔥 configuration file not found: ${configPath}`);
+        process.exit(1);
     }
+
     const fileContents = fs.readFileSync(configPath, 'utf8');
     const config = parse(fileContents) as AppConfig;
     return config;
@@ -75,11 +76,10 @@ export function loadConfig(): AppConfig {
         return config;
     } catch (error) {
         if (error instanceof Error) {
-            throw new Error(
-                `🔥 Failed to load configuration: ${error.message}`,
-            );
+            console.error(`🔥 failed to load configuration: ${error.message}`);
+            process.exit(1);
         } else {
-            throw new Error(`🔥 Failed to load configuration: Unknown error`);
+            throw new Error(`🔥 failed to load configuration: unknown error`);
         }
     }
 }
