@@ -109,13 +109,13 @@ The project follows a structured folder layout to maintain clarity and organizat
 │   │   │           └── main.ts        # Routes definition for the main module
 │   │   └── shared/
 │   │       ├── middlewares/
-│   │       │   ├── http-logger.ts     # HTTP request logging middleware (Morgan)
+│   │       │   ├── http.logger.ts     # HTTP request logging middleware (Morgan)
 │   │       │   ├── malformed.ts       # Middleware to catch malformed request errors
-│   │       │   └── not-found.ts       # Middleware for handling 404 Not Found errors
+│   │       │   └── not.found.ts       # Middleware for handling 404 Not Found errors
 │   │       └── utils/
 │   │           ├── jsend.ts           # JSend response format helpers
 │   │           ├── logger.ts          # Centralized Winston logger configuration
-│   │           └── path-alias.ts      # Utility for resolving path aliases
+│   │           └── path.alias.ts      # Utility for resolving path aliases
 │   ├── console.ts                     # Main entry point for CLI commands
 │   └── http.ts                        # Main entry point for the HTTP server (Express app)
 ├── package.json                       # Project metadata and dependencies

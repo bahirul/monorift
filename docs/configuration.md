@@ -77,10 +77,13 @@ cors:
 
 ```yaml
 app:
+  id: "monorift-app"
   env: "production"
   debug: false
+  port: 50002
   logLevel: "info"
 
 cors:
+  credentials: true
   origin: ["https://your-production-domain.com"]
 ```
