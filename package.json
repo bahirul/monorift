@@ -1,11 +1,10 @@
 {
   "name": "monorift",
   "version": "0.0.1",
-  "type": "module",
   "scripts": {
-    "start": "node ./dist/http.js",
+    "start": "node ./build/http.js",
     "dev": "nodemon --exec tsx ./src/http.ts",
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./build",
     "build": "npm run clean && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

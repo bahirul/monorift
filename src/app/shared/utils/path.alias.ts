@@ -2,10 +2,6 @@
  * Resolve path alias to the actual path in the project
  */
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 function formatPath(pathStr: string): string {
     const paths = pathStr.split('/').filter((p) => p != '');

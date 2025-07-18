@@ -1,10 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { parse } from 'yaml';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // define the structure of the application configuration
 interface AppConfig {
@@ -26,6 +22,21 @@ interface AppConfig {
     cors: {
         credentials: boolean; // enable credentials for cookies
         origin: boolean | string | string[]; // allow all origins or specific ones
+    };
+
+    minio: {
+        endPoint: string;
+        accessKey: string;
+        secretKey: string;
+        port: number;
+        useSSL: boolean;
+        pathStyle: boolean;
+    };
+
+    secureMode: boolean; // Enable secure mode for the application
+
+    ipFilter: {
+        allowList: string[]; // List of allowed IP addresses
     };
 }
 
