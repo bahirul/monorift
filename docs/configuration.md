@@ -70,7 +70,7 @@ app:
 
 cors:
   credentials: true
-  origin: true
+  origin: ['*']
 ```
 
 ### `config.production.yaml`

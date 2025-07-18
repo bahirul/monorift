@@ -31,7 +31,7 @@ app.use('/', defaultRoutes);
 app.use(notFoundMiddleware);
 
 // error handler
-app.use((err: Error, req: Request, res: Response) => {
+app.use((err: Error, _req: Request, res: Response) => {
     logger.error({
         action: 'errorHandler',
         message: (err as Error)?.message,
