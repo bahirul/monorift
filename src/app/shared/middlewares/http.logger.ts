@@ -21,10 +21,26 @@ const httpLoggerMiddleware = [
                 req.method === 'PATCH';
 
             if (shouldLog) {
-                logger.debug(
-                    `body request for ${req.method} ${req.originalUrl}\n` +
-                        JSON.stringify(req.body, null, 2),
-                );
+                // debug log request body and other details
+                logger.debug({
+                    method: req.method,
+                    url: req.originalUrl,
+                    body: req.body,
+                    headers: req.headers,
+                    params: req.params,
+                    query: req.query,
+                    remoteAddr: req.socket.remoteAddress,
+                    remotePort: req.socket.remotePort,
+                    userAgent: req.headers['user-agent'],
+                    ip: req.ip,
+                    protocol: req.protocol,
+                    hostname: req.hostname,
+                    secure: req.secure,
+                    httpVersion: req.httpVersion,
+                    httpVersionMajor: req.httpVersionMajor,
+                    httpVersionMinor: req.httpVersionMinor,
+                    baseUrl: req.baseUrl,
+                });
             }
         }
         next();

@@ -8,4 +8,4 @@ app:
 # Cross-Origin Resource Sharing (CORS) configuration
 cors:
   credentials: true # enable credentials for cookies
-  origin: true # allow all origins
+  origin: ['*'] # allow all origins
