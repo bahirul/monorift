@@ -3,7 +3,7 @@
  */
 import { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { loadConfig } from '../../config/app';
+import { loadConfig } from '../../config/app.config';
 import { logger } from '../utils/logger';
 
 const appConfig = loadConfig();

@@ -2,7 +2,7 @@
  * Logger for the application
  */
 import winston from 'winston';
-import { loadConfig } from '../../config/app';
+import { loadConfig } from '../../config/app.config';
 import { getAlias } from './path.alias';
 
 const { combine, timestamp, printf } = winston.format;
