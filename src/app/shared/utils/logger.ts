@@ -2,8 +2,8 @@
  * Logger for the application
  */
 import winston from 'winston';
-import { loadConfig } from '../../config/app.js';
-import { getAlias } from './path.alias.js';
+import { loadConfig } from '../../config/app';
+import { getAlias } from './path.alias';
 
 const { combine, timestamp, printf } = winston.format;
 const timestampFormat = 'DD/MMM/YYYY HH:mm:ss';

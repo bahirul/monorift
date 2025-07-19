@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getMainAction } from '../controllers/main.js';
+import { getMainAction } from '../controllers/main.controller';
 
 // main routes
 const mainRoutes = Router();

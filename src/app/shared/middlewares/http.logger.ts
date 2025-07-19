@@ -3,8 +3,8 @@
  */
 import { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
-import { loadConfig } from '../../config/app.js';
-import { logger } from '../utils/logger.js';
+import { loadConfig } from '../../config/app';
+import { logger } from '../utils/logger';
 
 const appConfig = loadConfig();
 const httpLoggerMiddleware = [

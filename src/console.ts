@@ -1,5 +1,5 @@
 import { program } from 'commander';
-import { helloWorld } from './app/modules/main/cli/hello.js';
+import { helloWorld } from './app/modules/main/cli/hello.cli';
 
 program.name('console.ts').description('Console Command').version('1.0.0');
 

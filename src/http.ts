@@ -1,11 +1,11 @@
 import cors from 'cors';
 import express, { Request, Response } from 'express';
 import helmet from 'helmet';
-import { loadConfig } from './app/config/app.js';
-import defaultRoutes from './app/modules/main/core/routes/main.js';
-import httpLoggerMiddleware from './app/shared/middlewares/http.logger.js';
-import notFoundMiddleware from './app/shared/middlewares/not.found.js';
-import { logger } from './app/shared/utils/logger.js';
+import { loadConfig } from './app/config/app';
+import defaultRoutes from './app/modules/main/core/routes/main.route';
+import httpLoggerMiddleware from './app/shared/middlewares/http.logger';
+import notFoundMiddleware from './app/shared/middlewares/not.found';
+import { logger } from './app/shared/utils/logger';
 
 // create express app
 const app = express();
