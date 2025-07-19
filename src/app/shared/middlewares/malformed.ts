@@ -20,7 +20,11 @@ export default function malformedMiddleware(
 ): void {
     // catch 400 error code
     if (err.statusCode === 400) {
-        res.status(400).send(jsendFail('malformed request'));
+        res.status(400).send(
+            jsendFail({
+                message: 'malformed request',
+            }),
+        );
         return;
     }
 

@@ -4,6 +4,7 @@
   "scripts": {
     "start": "node ./build/http.js",
     "dev": "nodemon --exec tsx ./src/http.ts",
+    "lint": "eslint ./src",
     "clean": "rimraf ./build",
     "build": "npm run clean && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"

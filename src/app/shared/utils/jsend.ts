@@ -34,11 +34,16 @@ export const jsendFail = <T>(data: T): JSendFailResponse<T> => {
     };
 };
 
+interface JSendErrorOptions<T> {
+    message: string;
+    data?: T | null | undefined;
+    code?: number;
+}
+
 export const jsendError = <T>(
-    message: string,
-    data?: T,
-    code?: number,
+    options: JSendErrorOptions<T>,
 ): JSendErrorResponse<T> => {
+    const { message, data, code } = options;
     return {
         status: 'error',
         message,

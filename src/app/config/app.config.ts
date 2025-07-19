@@ -32,12 +32,6 @@ interface AppConfig {
         useSSL: boolean;
         pathStyle: boolean;
     };
-
-    secureMode: boolean; // Enable secure mode for the application
-
-    ipFilter: {
-        allowList: string[]; // List of allowed IP addresses
-    };
 }
 
 // get the configuration based on the environment
@@ -51,9 +45,9 @@ function getConfigByEnv(env: string): AppConfig {
     let configPath = defaultConfigPath;
 
     // Check for environment-specific config file
-    if (env !== 'development' && fs.existsSync(envConfigPath)) {
+    if (fs.existsSync(envConfigPath)) {
         configPath = envConfigPath;
-    } else if (env !== 'development') {
+    } else {
         console.warn(
             `⚠️ ${env} config file not found, falling back to default: ${envConfigPath}`,
         );

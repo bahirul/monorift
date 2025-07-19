@@ -3,7 +3,7 @@ app:
   id: monorift
   debug: true
   port: 50002
-  logLevel: info
+  logLevel: http
 
 # Cross-Origin Resource Sharing (CORS) configuration
 cors:

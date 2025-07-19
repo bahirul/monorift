@@ -5,7 +5,8 @@ import { loadConfig } from './app/config/app.config';
 import defaultRoutes from './app/modules/main/core/routes/main.route';
 import httpLoggerMiddleware from './app/shared/middlewares/http.logger';
 import notFoundMiddleware from './app/shared/middlewares/not.found';
-import { logger } from './app/shared/utils/logger';
+import { logger } from './app/shared/services/logger';
+import { jsendError } from './app/shared/utils/jsend';
 
 // create express app
 const app = express();
@@ -38,10 +39,15 @@ app.use((err: Error, _req: Request, res: Response) => {
         stack: appConfig.app.debug ? (err as Error)?.stack : null,
     });
 
-    res.status(500).json({
-        status: 'error',
-        message: 'internal server error',
-    });
+    res.status(500).json(
+        jsendError({
+            message: appConfig.app.debug
+                ? (err as Error)?.message
+                : 'internal server error',
+            data: appConfig.app.debug ? (err as Error)?.stack : null,
+            code: 500,
+        }),
+    );
 });
 
 // start server

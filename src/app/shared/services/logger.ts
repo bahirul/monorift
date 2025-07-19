@@ -3,7 +3,7 @@
  */
 import winston from 'winston';
 import { loadConfig } from '../../config/app.config';
-import { getAlias } from './path.alias';
+import { getAlias } from '../utils/path.alias';
 
 const { combine, timestamp, printf } = winston.format;
 const timestampFormat = 'DD/MMM/YYYY HH:mm:ss';
