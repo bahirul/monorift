@@ -103,8 +103,7 @@ The project follows a structured folder layout to maintain clarity and organizat
 │   │   │   └── main/
 │   │   │       ├── cli/
 │   │   │       │   └── hello.cli.ts       # CLI command for "hello world"
-│   │   │       ├── core/              # Core logic for the main module (controller, usecase, routes, validators, events)
-│   │   │       │   ├── controllers/
+│   │   │       ├── controllers/           
 │   │   │       │   │   └── main.controller.ts    # Controller for main module API endpoints
 │   │   │       └── routes/
 │   │   │           └── main.route.ts        # Routes definition for the main module
