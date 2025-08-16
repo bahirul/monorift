@@ -1,6 +1,6 @@
+import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
-import { parse } from 'yaml';
 
 // define the structure of the application configuration
 interface AppConfig {
@@ -9,14 +9,7 @@ interface AppConfig {
         env: string;
         debug: boolean;
         port: number;
-        logLevel:
-            | 'info'
-            | 'debug'
-            | 'warn'
-            | 'error'
-            | 'silly'
-            | 'http'
-            | 'verbose';
+        logLevel: string;
     };
 
     cors: {
@@ -25,13 +18,30 @@ interface AppConfig {
     };
 }
 
+// parse boolean from .env
+function parseBoolean(value?: string, defaultVal = false): boolean {
+    if (!value) return defaultVal;
+    return ['true', '1', 'yes'].includes(value.toLowerCase());
+}
+
+// parse number from .env
+function parseNumber(value?: string, defaultVal = 0): number {
+    return value ? Number(value) : defaultVal;
+}
+
+// parse array from .env
+function parseArray(value?: string, separator = ','): string[] {
+    if (!value) return [];
+    return value
+        .split(separator)
+        .map((v) => v.trim())
+        .filter(Boolean);
+}
+
 // get the configuration based on the environment
 function getConfigByEnv(env: string): AppConfig {
-    const defaultConfigPath = path.resolve(__dirname, '../../../config.yaml');
-    const envConfigPath = path.resolve(
-        __dirname,
-        `../../../config.${env}.yaml`,
-    );
+    const defaultConfigPath = path.resolve(__dirname, '../../../.env');
+    const envConfigPath = path.resolve(__dirname, `../../../${env}.env`);
 
     let configPath = defaultConfigPath;
 
@@ -40,7 +50,7 @@ function getConfigByEnv(env: string): AppConfig {
         configPath = envConfigPath;
     } else {
         console.warn(
-            `⚠️ ${env} config file not found, falling back to default: ${envConfigPath}`,
+            `⚠️ ${env} config file not found, falling back to default: ${defaultConfigPath}`,
         );
     }
 
@@ -49,8 +59,23 @@ function getConfigByEnv(env: string): AppConfig {
         process.exit(1);
     }
 
-    const fileContents = fs.readFileSync(configPath, 'utf8');
-    const config = parse(fileContents) as AppConfig;
+    // load environment variables from .env file
+    dotenv.config({ path: configPath });
+
+    const config: AppConfig = {
+        app: {
+            id: process.env.APP_ID || 'my-app',
+            env: process.env.NODE_ENV || 'development',
+            debug: parseBoolean(process.env.APP_DEBUG),
+            port: parseNumber(process.env.APP_PORT, 3000),
+            logLevel: process.env.APP_LOG_LEVEL || 'info',
+        },
+        cors: {
+            credentials: parseBoolean(process.env.CORS_CREDENTIALS),
+            origin: parseArray(process.env.CORS_ORIGIN),
+        },
+    };
+
     return config;
 }
 
