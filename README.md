@@ -27,20 +27,18 @@ A step-by-step series of examples that tell you how to get a development environ
     npm install
     ```
 3.  **Create configuration files**
-    The project uses `config.yaml` for default settings and `config.production.yaml` or `config.development.yaml` for environment-specific overrides. You can start by copying the `example.config.yaml` or creating your own.
-    
-    Example `config.yaml`:
-    ```yaml
-    app:
-      id: "monorift-app"
-      env: "development" # or production
-      debug: true
-      port: 50002
-      logLevel: "debug" # error, warn, info, http, verbose, debug, silly
-    
-    cors:
-      credentials: true
-      origin: true # set to true to allow all, or specify an array of origins
+    The project uses `.env` for default settings and `.production.env` or `.development.env` for environment-specific overrides. You can start by copying the `example.env` or creating your own.
+
+    Example `.env`:
+    ```env
+    APP_ID=monorift-app
+    APP_ENV=development
+    APP_DEBUG=true
+    APP_PORT=50001
+    APP_LOG_LEVEL=debug
+
+    CORS_CREDENTIALS=true
+    CORS_ORIGIN=*
     ```
 
 ## Usage
@@ -121,7 +119,7 @@ The project follows a structured folder layout to maintain clarity and organizat
 │   └── http.ts                        # Main entry point for the HTTP server (Express app)
 ├── package.json                       # Project metadata and dependencies
 ├── tsconfig.json                      # TypeScript configuration
-└── config.example.yaml                # Example configuration file
+└── .example.env                       # Example env config file
 └── tsconfig.json                      # TypeScript configuration for the project
 └── eslint.config.mjs                  # ESLint configuration file
 └── .prettierrc                        # Prettier configuration file
