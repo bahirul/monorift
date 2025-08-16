@@ -4,11 +4,11 @@ The project uses YAML files for configuration, located at the root level. The co
 
 ## Configuration Files
 
--   `config.yaml`: The default configuration file.
--   `config.development.yaml`: Overrides settings for the development environment.
--   `config.production.yaml`: Overrides settings for the production environment.
+-   `.env`: The default configuration file.
+-   `.development.env`: Overrides settings for the development environment.
+-   `.production.env`: Overrides settings for the production environment.
 
-The `NODE_ENV` environment variable determines which configuration file is loaded. If a specific environment file is not found, it falls back to `config.yaml`.
+The `NODE_ENV` environment variable determines which configuration file is loaded. If a specific environment file is not found, it falls back to `.env`.
 
 ## Configuration Parameters
 
@@ -58,32 +58,28 @@ Key configuration parameters are defined in `src/app/config/app.ts`:
 
 ## Example Configuration
 
-### `config.yaml`
+### `.env`
 
-```yaml
-app:
-  id: "monorift-app"
-  env: "development"
-  debug: true
-  port: 50002
-  logLevel: "debug"
+```env
+APP_ID=monorift-app
+APP_ENV=development
+APP_DEBUG=true
+APP_PORT=50001
+APP_LOG_LEVEL=debug
 
-cors:
-  credentials: true
-  origin: ['*']
+CORS_CREDENTIALS=true
+CORS_ORIGIN=*
 ```
 
-### `config.production.yaml`
+### `.production.env`
 
-```yaml
-app:
-  id: "monorift-app"
-  env: "production"
-  debug: false
-  port: 50002
-  logLevel: "info"
+```env
+APP_ID=monorift-app
+APP_ENV=production
+APP_DEBUG=false
+APP_PORT=50002
+APP_LOG_LEVEL=info
 
-cors:
-  credentials: true
-  origin: ["https://your-production-domain.com"]
+CORS_CREDENTIALS=true
+CORS_ORIGIN=https://your-production-domain.com
 ```
