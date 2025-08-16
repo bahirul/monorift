@@ -23,15 +23,6 @@ interface AppConfig {
         credentials: boolean; // enable credentials for cookies
         origin: boolean | string | string[]; // allow all origins or specific ones
     };
-
-    minio: {
-        endPoint: string;
-        accessKey: string;
-        secretKey: string;
-        port: number;
-        useSSL: boolean;
-        pathStyle: boolean;
-    };
 }
 
 // get the configuration based on the environment
