@@ -23,7 +23,7 @@ app.use(httpLoggerMiddleware);
 app.use(
     cors({
         credentials: appConfig.cors.credentials || false,
-        origin: appConfig.cors.origin || true,
+        origin: appConfig.cors.origin || '*',
     }),
 );
 
