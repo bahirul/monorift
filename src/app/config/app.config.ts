@@ -1,6 +1,11 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
+import {
+    parseArray,
+    parseBoolean,
+    parseNumber,
+} from '../shared/utils/config.parser';
 
 // define the structure of the application configuration
 interface AppConfig {
@@ -16,26 +21,6 @@ interface AppConfig {
         credentials: boolean; // enable credentials for cookies
         origin: boolean | string | string[]; // allow all origins or specific ones
     };
-}
-
-// parse boolean from .env
-function parseBoolean(value?: string, defaultVal = false): boolean {
-    if (!value) return defaultVal;
-    return ['true', '1', 'yes'].includes(value.toLowerCase());
-}
-
-// parse number from .env
-function parseNumber(value?: string, defaultVal = 0): number {
-    return value ? Number(value) : defaultVal;
-}
-
-// parse array from .env
-function parseArray(value?: string, separator = ','): string[] {
-    if (!value) return [];
-    return value
-        .split(separator)
-        .map((v) => v.trim())
-        .filter(Boolean);
 }
 
 // get the configuration based on the environment

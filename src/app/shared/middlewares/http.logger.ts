@@ -14,13 +14,10 @@ const httpLoggerMiddleware = [
         },
     }),
     function logRequestBody(req: Request, _res: Response, next: NextFunction) {
+        // debug request with methods: POST, PUT, PATCH, DELETE
         if (appConfig.app.debug) {
-            const shouldLog =
-                req.method === 'POST' ||
-                req.method === 'PUT' ||
-                req.method === 'PATCH';
-
-            if (shouldLog) {
+            const methods = ['POST', 'PUT', 'PATCH', 'DELETE'];
+            if (methods.includes(req.method)) {
                 // debug log request body and other details
                 logger.debug(
                     JSON.stringify(
