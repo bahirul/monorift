@@ -5,9 +5,8 @@
     "start": "node ./build/http.js",
     "dev": "nodemon --exec tsx ./src/http.ts",
     "lint": "eslint ./src",
-    "clean": "rimraf ./build",
-    "build": "npm run clean && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf ./build && tsc",
+    "test": "vitest"
   },
   "keywords": [
     "node",
@@ -29,14 +28,16 @@
     "@types/knex": "^0.15.2",
     "@types/luxon": "^3.4.2",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^22.9.0",
+    "@types/node": "^24.3.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.15.0",
     "globals": "^15.12.0",
     "nodemon": "^3.1.10",
     "rimraf": "^6.0.1",
     "tsx": "^4.20.3",
     "typescript": "^5.6.3",
-    "typescript-eslint": "^8.16.0"
+    "typescript-eslint": "^8.16.0",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "chalk": "^5.3.0",

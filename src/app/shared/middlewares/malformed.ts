@@ -2,27 +2,21 @@
  * This middleware is used to catch malformed request errors like invalid JSON body request.
  */
 import { NextFunction, Request, Response } from 'express';
-import { jsendFail } from '../utils/jsend';
-
-interface MalformedError extends Error {
-    expose: boolean;
-    statusCode: number;
-    status: number;
-    body: string;
-    type: string;
-}
+import { jsendFail } from '../types/jsend';
 
 export default function malformedMiddleware(
-    err: MalformedError,
+    err: Error,
     _req: Request,
     res: Response,
     next: NextFunction,
 ): void {
-    // catch 400 error code
-    if (err.statusCode === 400) {
-        res.status(400).send(
+    /**
+     * Handle known malformed request errors.
+     */
+    if ('status' in err && 'type' in err) {
+        res.status(err.status as number).json(
             jsendFail({
-                message: 'malformed request',
+                body: err.type,
             }),
         );
         return;

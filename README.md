@@ -108,14 +108,17 @@ The project follows a structured folder layout to maintain clarity and organizat
 │   │   └── shared/
 │   │       ├── services/
 │   │       │   ├── logger.ts          # Centralized Winston logger service
+│   │       │   ├── logger.factory.ts  # Logger factory for creating custom loggers
 │   │       ├── middlewares/
 │   │       │   ├── http.logger.ts     # HTTP request logging middleware (Morgan)
 │   │       │   ├── malformed.ts       # Middleware to catch malformed request errors
 │   │       │   └── not.found.ts       # Middleware for handling 404 Not Found errors
 │   │       └── utils/
 │   │           ├── jsend.ts           # JSend response format helpers
+│   │           ├── config.parser.ts   # Utility for parsing configuration values
 │   │           └── path.alias.ts      # Utility for resolving path aliases
 │   ├── console.ts                     # Main entry point for CLI commands
+│   ├── express.ts                     # Express application setup and middleware
 │   └── http.ts                        # Main entry point for the HTTP server (Express app)
 ├── package.json                       # Project metadata and dependencies
 ├── tsconfig.json                      # TypeScript configuration
@@ -133,4 +136,4 @@ For detailed documentation on various aspects of the project, refer to the follo
 - [Configuration](docs/configuration.md): Learn how to configure the application using YAML files.
 - [Routing](docs/routing.md): Understand how routing is implemented in the application.
 - [Application Lifecycle](docs/lifecycle.md): Explore the lifecycle of the application from startup to shutdown.
-- [Error Handling](docs/error.handling.md): Learn about the error handling mechanisms in
+- [Error Handling](docs/error.handling.md): Learn about the error handling mechanisms in the project.

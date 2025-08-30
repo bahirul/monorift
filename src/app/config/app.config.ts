@@ -4,88 +4,115 @@ import path from 'path';
 import {
     parseArray,
     parseBoolean,
-    parseNumber,
+    parseString,
 } from '../shared/utils/config.parser';
 
-// define the structure of the application configuration
-interface AppConfig {
-    app: {
-        id: string;
-        env: string;
-        debug: boolean;
-        port: number;
-        logLevel: string;
-    };
+/**
+ * Loads environment variables from a `.env` file based on the specified environment.
+ *
+ * This function attempts to load environment variables from a file matching the
+ * provided environment name (e.g., `.development.env`). If no matching file is found,
+ * it falls back to `.env`. If neither file exists, the process exits with an error.
+ *
+ * @param env - The environment name (e.g., 'development', 'production'). Defaults to 'development'.
+ */
+function loadEnv(env = 'development') {
+    // Load environment variables from .env files default fallback to .env
+    const envFile = [`.${env}.env`, '.env'].find((file) =>
+        fs.existsSync(path.resolve(process.cwd(), file)),
+    );
 
-    cors: {
-        credentials: boolean; // enable credentials for cookies
-        origin: boolean | string | string[]; // allow all origins or specific ones
-    };
-}
-
-// get the configuration based on the environment
-function getConfigByEnv(env: string): AppConfig {
-    const defaultConfigPath = path.resolve(__dirname, '../../../.env');
-    const envConfigPath = path.resolve(__dirname, `../../../${env}.env`);
-
-    let configPath = defaultConfigPath;
-
-    // Check for environment-specific config file
-    if (fs.existsSync(envConfigPath)) {
-        configPath = envConfigPath;
+    // Load the environment variables from the found file
+    if (envFile) {
+        dotenv.config({ path: path.resolve(process.cwd(), envFile) });
     } else {
-        console.warn(
-            `⚠️ ${env} config file not found, falling back to default: ${defaultConfigPath}`,
-        );
-    }
-
-    if (!fs.existsSync(configPath)) {
-        console.error(`🔥 configuration file not found: ${configPath}`);
+        console.error(`🔥 no environment file found for: ${env}`);
         process.exit(1);
     }
+}
 
-    // load environment variables from .env file
-    dotenv.config({ path: configPath });
+/**
+ * Represents the application configuration structure.
+ */
+interface Config {
+    app: {
+        /**
+         * The application ID.
+         */
+        id: string;
+        /**
+         * The current environment (e.g., 'development', 'production').
+         */
+        env: string;
+        /**
+         * The port number the application listens on.
+         */
+        port: number;
+    };
+    logger: {
+        /**
+         * The logging level (e.g., 'info', 'debug').
+         */
+        level: string;
+    };
+    cors: {
+        /**
+         * Whether credentials are allowed in CORS requests.
+         */
+        credentials: boolean;
+        /**
+         * The allowed origins for CORS requests.
+         */
+        origin: string[];
+    };
+}
 
-    const config: AppConfig = {
-        app: {
-            id: process.env.APP_ID || 'my-app',
-            env: process.env.NODE_ENV || 'development',
-            debug: parseBoolean(process.env.APP_DEBUG),
-            port: parseNumber(process.env.APP_PORT, 3000),
-            logLevel: process.env.APP_LOG_LEVEL || 'info',
-        },
-        cors: {
-            credentials: parseBoolean(process.env.CORS_CREDENTIALS),
-            origin: parseArray(process.env.CORS_ORIGIN),
-        },
+/**
+ * Creates the application configuration by parsing environment variables.
+ *
+ * @param overrides - Optional overrides for environment variables.
+ * @returns The parsed application configuration.
+ */
+function createConfig(overrides: NodeJS.ProcessEnv = {}): Config {
+    const NODE_ENV =
+        overrides.NODE_ENV || process.env.NODE_ENV || 'development';
+
+    // Load environment variables from .env files
+    loadEnv(NODE_ENV);
+
+    // Merge environment variables
+    const env = {
+        ...process.env,
+        ...overrides,
     };
 
-    return config;
+    return {
+        app: {
+            id: parseString(env.APP_ID, 'my-app'),
+            env: parseString(env.APP_ENV, 'development'),
+            port: parseInt(env.APP_PORT || '50001'),
+        },
+        logger: {
+            level: parseString(env.LOG_LEVEL, 'info'),
+        },
+        cors: {
+            credentials: parseBoolean(env.CORS_CREDENTIALS, true),
+            origin: parseArray(env.CORS_ORIGIN || '*'),
+        },
+    };
 }
 
-// Use variable to hold the configuration, initialized to null
-let config: AppConfig | null = null;
-
-// Export the configuration function
-export function loadConfig(): AppConfig {
-    const env = process.env.NODE_ENV || 'development';
-
-    // If config is already loaded, return it
-    if (config) {
-        return config;
+/**
+ * App configuration loader.
+ *
+ * This function loads the application configuration, creating it if it doesn't already exist.
+ */
+let loadedConfig: Config;
+const AppConfig = () => {
+    if (!loadedConfig) {
+        loadedConfig = createConfig();
     }
+    return loadedConfig;
+};
 
-    try {
-        // Load the configuration based on the environment
-        config = getConfigByEnv(env);
-        return config;
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error(`🔥 failed to load configuration: ${error.message}`);
-            process.exit(1);
-        } else {
-            throw new Error(`🔥 failed to load configuration: unknown error`);
-        }
-    }
-}
+export { AppConfig };
