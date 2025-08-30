@@ -33,9 +33,9 @@ A step-by-step series of examples that tell you how to get a development environ
     ```env
     APP_ID=monorift-app
     APP_ENV=development
-    APP_DEBUG=true
     APP_PORT=50001
-    APP_LOG_LEVEL=debug
+
+    LOGGER_LEVEL=debug
 
     CORS_CREDENTIALS=true
     CORS_ORIGIN=*
@@ -106,15 +106,17 @@ The project follows a structured folder layout to maintain clarity and organizat
 │   │   │       └── routes/
 │   │   │           └── main.route.ts        # Routes definition for the main module
 │   │   └── shared/
+│   │       ├── middlewares/
+│   │       │   ├── morgan.ts          # HTTP request logging middleware (Morgan)
+│   │       │   ├── malformed.ts       # Middleware to catch malformed request errors
+│   │       │   └── not.found.ts       # Middleware for handling 404 Not Found errors
 │   │       ├── services/
 │   │       │   ├── logger.ts          # Centralized Winston logger service
 │   │       │   ├── logger.factory.ts  # Logger factory for creating custom loggers
-│   │       ├── middlewares/
-│   │       │   ├── http.logger.ts     # HTTP request logging middleware (Morgan)
-│   │       │   ├── malformed.ts       # Middleware to catch malformed request errors
-│   │       │   └── not.found.ts       # Middleware for handling 404 Not Found errors
-│   │       └── utils/
+│   │       └── types/
 │   │           ├── jsend.ts           # JSend response format helpers
+│   │       └── utils/
+│   │           ├── error.message.ts   # Error message formatting helpers
 │   │           ├── config.parser.ts   # Utility for parsing configuration values
 │   │           └── path.alias.ts      # Utility for resolving path aliases
 │   ├── console.ts                     # Main entry point for CLI commands
@@ -135,5 +137,5 @@ For detailed documentation on various aspects of the project, refer to the follo
 
 - [Configuration](docs/configuration.md): Learn how to configure the application using YAML files.
 - [Routing](docs/routing.md): Understand how routing is implemented in the application.
-- [Application Lifecycle](docs/lifecycle.md): Explore the lifecycle of the application from startup to shutdown.
+- [Application Lifecycle](docs/request.lifecycle.md): Explore the lifecycle of the application from startup to shutdown.
 - [Error Handling](docs/error.handling.md): Learn about the error handling mechanisms in the project.

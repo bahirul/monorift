@@ -2,6 +2,8 @@
 
 The application has a robust error handling mechanism to catch and handle various types of errors. The error handling is implemented using middleware.
 
+Format response is based on Jsend specification, please see [Jsend documentation](https://github.com/omniti-labs/jsend).
+
 ## Types of Errors
 
 ### 404 Not Found
@@ -24,7 +26,7 @@ This middleware is defined in `src/app/shared/middlewares/not-found.ts`. It is r
 
 ### `malformedMiddleware`
 
-This middleware is defined in `src/app/shared/middlewares/malformed.ts`. It is responsible for handling requests with malformed JSON payloads.
+This middleware is defined in `src/app/shared/middlewares/malformed.ts`. It is responsible for handling requests with malformed body requests.
 
 ### Global Error Handler
 
@@ -41,16 +43,19 @@ Error triggered by client will return a `fail` status, while errors triggered by
 ```json
 {
   "status": "fail",
-  "message": "resource not found",
+  "data": {
+    "endpoint": "resource not found",
+  },
 }
 ```
 
 ### 400 Bad Request
-
 ```json
 {
   "status": "fail",
-  "message": "malformed request",
+  "data": {
+    "body": "entity.parse.failed",
+  },
 }
 ```
 
@@ -61,4 +66,3 @@ Error triggered by client will return a `fail` status, while errors triggered by
   "status": "error",
   "message": "internal server error",
 }
-```

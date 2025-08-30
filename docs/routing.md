@@ -6,13 +6,13 @@ Routing is the process of determining how an application responds to a client re
 
 Routes are defined in the `src/app/modules` directory. Each module can have its own routes, which are defined in a `routes` directory within the module.
 
-For example, the `main` module has its routes defined in `src/app/modules/main/routes/main.ts`.
+For example, the `main` module has its routes defined in `src/app/modules/main/routes/main.route.ts`.
 
 ### Example Route Definition
 
 ```typescript
 import { Router } from 'express';
-import { main } from '../controllers/main.js';
+import { main } from '../controllers/main.controller.ts';
 
 const router = Router();
 
@@ -30,7 +30,7 @@ Routes are registered in the `src/http.ts` file. The routes for each module are 
 ### Example Route Registration
 
 ```typescript
-import defaultRoutes from './app/modules/main/routes/main.js';
+import defaultRoutes from './app/modules/main/routes/main.route.ts';
 
 // ...
 

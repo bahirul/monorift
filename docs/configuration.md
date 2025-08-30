@@ -26,19 +26,13 @@ Key configuration parameters are defined in `src/app/config/app.ts`:
 -   **Description**: The application environment. Can be `development` or `production`.
 -   **Example**: `development`
 
-### `app.debug`
-
--   **Type**: `boolean`
--   **Description**: Enables or disables debug mode. When enabled, the error handler will include the stack trace in the response.
--   **Example**: `true`
-
 ### `app.port`
 
 -   **Type**: `number`
 -   **Description**: The port on which the Express server will listen.
 -   **Example**: `50002`
 
-### `app.logLevel`
+### `logger.level`
 
 -   **Type**: `string`
 -   **Description**: The minimum log level for the application. The available levels are `error`, `warn`, `info`, `http`, `verbose`, `debug`, and `silly`.
@@ -63,9 +57,9 @@ Key configuration parameters are defined in `src/app/config/app.ts`:
 ```env
 APP_ID=monorift-app
 APP_ENV=development
-APP_DEBUG=true
 APP_PORT=50001
-APP_LOG_LEVEL=debug
+
+LOGGER_LEVEL=debug
 
 CORS_CREDENTIALS=true
 CORS_ORIGIN=*
@@ -76,9 +70,8 @@ CORS_ORIGIN=*
 ```env
 APP_ID=monorift-app
 APP_ENV=production
-APP_DEBUG=false
 APP_PORT=50002
-APP_LOG_LEVEL=info
+LOGGER_LEVEL=info
 
 CORS_CREDENTIALS=true
 CORS_ORIGIN=https://your-production-domain.com
