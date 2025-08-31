@@ -6,7 +6,8 @@
     "dev": "nodemon --exec tsx ./src/http.ts",
     "lint": "eslint ./src",
     "build": "rimraf ./build && tsc",
-    "test": "vitest"
+    "test": "vitest",
+    "test:coverage": "vitest --coverage"
   },
   "keywords": [
     "node",
