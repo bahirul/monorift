@@ -17,7 +17,6 @@ describe('Path Alias', () => {
         const pathFormatted = formatPathAlias(
             '@src/app/shared/utils/path.alias//',
         );
-        console.log(pathFormatted);
         expect(pathFormatted).toBe('@src/app/shared/utils/path.alias');
     });
 

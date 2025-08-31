@@ -6,7 +6,7 @@
 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
 import { AppConfig } from './app/config/app.config';
 import defaultRoutes from './app/modules/main/routes/main.route';
@@ -47,7 +47,7 @@ app.use(notFoundMiddleware);
  * @param _req - The incoming request object (unused).
  * @param res - The outgoing response object.
  */
-app.use((err: Error, _req: Request, res: Response) => {
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     // format error message
     const errorMsg = errorMessage(appConfig.app.env, err);
 

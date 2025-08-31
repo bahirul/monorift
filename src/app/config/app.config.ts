@@ -42,6 +42,8 @@ interface Config {
         id: string;
         /**
          * The current environment (e.g., 'development', 'production').
+         *
+         * IMPORTANT: value read/injected to config from NODE_ENV not .env file
          */
         env: string;
         /**
@@ -89,7 +91,7 @@ function createConfig(overrides: NodeJS.ProcessEnv = {}): Config {
     return {
         app: {
             id: parseString(env.APP_ID, 'my-app'),
-            env: parseString(env.APP_ENV, 'development'),
+            env: parseString(NODE_ENV, 'development'),
             port: parseInt(env.APP_PORT || '50001'),
         },
         logger: {

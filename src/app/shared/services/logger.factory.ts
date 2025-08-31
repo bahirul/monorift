@@ -8,9 +8,10 @@ import winston from 'winston';
  * @param level - The logging level.
  * @returns A Winston logger instance.
  */
-const createLogger = (level: string) => {
+const createLogger = (level: string, silent = false) => {
     const logger = winston.createLogger({
         level,
+        silent,
         format: winston.format.combine(
             winston.format.colorize({ all: true }),
             winston.format.timestamp(),
@@ -28,8 +29,10 @@ const createLogger = (level: string) => {
  * @returns The formatted log message.
  */
 const formatLogMessage = (info: winston.Logform.TransformableInfo) => {
-    const { timestamp, level, message } = info;
-    return `${timestamp} [${level}]: ${message}`;
+    const { timestamp, level, message, context } = info;
+    return `${timestamp} [${level}] ${
+        context ? `[${context}] ` : ''
+    }${message}`;
 };
 
 export { createLogger, formatLogMessage };

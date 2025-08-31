@@ -33,6 +33,20 @@ describe('Logger Factory', () => {
             message: 'Test log message',
         });
 
-        expect(formatMessage).toMatch(`${date} [info]: Test log message`);
+        expect(formatMessage).toMatch(`${date} [info] Test log message`);
+    });
+
+    it('should format the log message with context correctly', () => {
+        const date = new Date().toISOString();
+        const formatMessage = formatLogMessage({
+            timestamp: date,
+            level: 'info',
+            message: 'Test log message',
+            context: 'TestContext',
+        });
+
+        expect(formatMessage).toMatch(
+            `${date} [info] [TestContext] Test log message`,
+        );
     });
 });
