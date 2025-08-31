@@ -42,8 +42,8 @@ function getAlias(
         }
     }
 
-    // fallback -> @src
-    return path.resolve(aliases['@src'], pathFormatted.replace('@', ''));
+    // fallback to -> @root. example @unknown -> @root/unknown
+    return path.resolve(aliases['@root'], pathFormatted.replace('@', ''));
 }
 
 export { formatPathAlias, getAlias };
