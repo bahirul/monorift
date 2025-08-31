@@ -15,7 +15,6 @@ import morganMiddleware from './app/shared/middlewares/morgan';
 import notFoundMiddleware from './app/shared/middlewares/not.found';
 import { logger } from './app/shared/services/logger';
 import { jsendError } from './app/shared/types/jsend';
-import { errorMessage } from './app/shared/utils/error.message';
 
 // create express app
 const app = express();
@@ -47,18 +46,24 @@ app.use(notFoundMiddleware);
  * @param _req - The incoming request object (unused).
  * @param res - The outgoing response object.
  */
-app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-    // format error message
-    const errorMsg = errorMessage(appConfig.app.env, err);
-
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
     // log error
-    logger.error(errorMsg.message, errorMsg.stack);
+    logger.log({
+        level: 'error',
+        context: req.path,
+        message: JSON.stringify(err.stack || err.message),
+    });
 
     // send error response to client
     res.status(500).json(
-        jsendError(errorMsg.message, {
-            data: errorMsg.stack,
-        }),
+        jsendError(
+            appConfig.app.env === 'development'
+                ? err.message
+                : 'internal server error',
+            {
+                data: appConfig.app.env === 'development' ? err.stack : null,
+            },
+        ),
     );
 });
 
