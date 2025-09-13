@@ -23,6 +23,12 @@ const defaultAliases = {
     '@src': path.resolve(__dirname, '../../../../src'),
 };
 
+interface AliasMap {
+    '@root': string;
+    '@src': string;
+    [key: string]: string; // allow additional aliases if needed
+}
+
 /**
  * Resolves a path alias to its actual path based on the provided aliases.
  *
@@ -30,10 +36,7 @@ const defaultAliases = {
  * @param aliases - A record of aliases to use for resolution. Defaults to `defaultAliases`.
  * @returns The resolved path string.
  */
-function getAlias(
-    pathStr: string,
-    aliases: Record<string, string> = defaultAliases,
-) {
+function getAlias(pathStr: string, aliases: AliasMap = defaultAliases) {
     // match alias
     const pathFormatted = formatPathAlias(pathStr);
     for (const alias in aliases) {

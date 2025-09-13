@@ -27,6 +27,7 @@ describe('Path Alias', () => {
     it('should resolve path aliases correctly', () => {
         const mockAliases = {
             '@src': '/mnt/src',
+            '@root': '/mnt',
         };
 
         const srcPath = getAlias(
@@ -44,10 +45,11 @@ describe('Path Alias', () => {
     it('should resolve to fallback if @alias not found', () => {
         const mockAliases = {
             '@src': '/mnt/src',
+            '@root': '/mnt',
         };
 
         const srcPath = getAlias('@shared/utils/path.alias.ts', mockAliases);
 
-        expect(srcPath).toBe('/mnt/src/shared/utils/path.alias.ts');
+        expect(srcPath).toBe('/mnt/shared/utils/path.alias.ts');
     });
 });
