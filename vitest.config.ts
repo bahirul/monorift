@@ -5,7 +5,7 @@ export default defineConfig({
         coverage: {
             all: false,
             exclude: [
-                './src/app/config/app.config.ts', // exclude app config from coverage
+                './src/config/app.config.ts', // exclude app config from coverage
             ],
         },
     },
