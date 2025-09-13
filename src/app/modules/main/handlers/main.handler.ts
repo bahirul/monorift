@@ -6,7 +6,7 @@ import { jsendSuccess } from '../../../shared/types/jsend';
  * @param _req - The HTTP request object.
  * @param res - The HTTP response object.
  */
-export const getMainAction = async (_req: Request, res: Response) => {
+export const getMainHandler = async (_req: Request, res: Response) => {
     res.json(
         jsendSuccess({
             message: 'OK!',
