@@ -1,5 +1,5 @@
 import { program } from 'commander';
-import { helloWorld } from './app/modules/main/commands/hello.command';
+import { helloWorld } from './modules/main/commands/hello.command';
 
 /**
  * Console command for the application.

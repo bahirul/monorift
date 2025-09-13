@@ -5,9 +5,9 @@
  * listening on the configured port.
  */
 
-import { AppConfig } from './app/config/app.config';
-import { logger } from './app/shared/services/logger';
+import { AppConfig } from './config/app.config';
 import app from './express';
+import { logger } from './shared/services/logger';
 
 /**
  * Load application configuration.

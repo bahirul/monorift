@@ -8,13 +8,13 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import helmet from 'helmet';
-import { AppConfig } from './app/config/app.config';
-import defaultRoutes from './app/modules/main/routes/main.route';
-import malformedMiddleware from './app/shared/middlewares/malformed';
-import morganMiddleware from './app/shared/middlewares/morgan';
-import notFoundMiddleware from './app/shared/middlewares/not.found';
-import { logger } from './app/shared/services/logger';
-import { jsendError } from './app/shared/types/jsend';
+import { AppConfig } from './config/app.config';
+import defaultRoutes from './modules/main/routes/main.route';
+import malformedMiddleware from './shared/middlewares/malformed';
+import morganMiddleware from './shared/middlewares/morgan';
+import notFoundMiddleware from './shared/middlewares/not.found';
+import { logger } from './shared/services/logger';
+import { jsendError } from './shared/types/jsend';
 
 // create express app
 const app = express();
