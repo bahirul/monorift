@@ -11,14 +11,14 @@ import {
  * Loads environment variables from a `.env` file based on the specified environment.
  *
  * This function attempts to load environment variables from a file matching the
- * provided environment name (e.g., `.development.env`). If no matching file is found,
+ * provided environment name (e.g., `.env.development`). If no matching file is found,
  * it falls back to `.env`. If neither file exists, the process exits with an error.
  *
  * @param env - The environment name (e.g., 'development', 'production'). Defaults to 'development'.
  */
 function loadEnv(env = 'development') {
     // Load environment variables from .env files default fallback to .env
-    const envFile = [`.${env}.env`, '.env'].find((file) =>
+    const envFile = [`.env.${env}`, '.env'].find((file) =>
         fs.existsSync(path.resolve(process.cwd(), file)),
     );
 

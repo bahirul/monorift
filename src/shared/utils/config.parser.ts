@@ -11,17 +11,6 @@ function parseBoolean(value?: string, defaultVal = false): boolean {
 }
 
 /**
- * Parses a number from a string.
- *
- * @param value - The string to parse.
- * @param defaultVal - The default value to return if the string is undefined or empty.
- * @returns The parsed number, or the default value if parsing fails.
- */
-function parseNumber(value?: string, defaultVal = 0): number {
-    return value ? Number(value.trim()) : defaultVal;
-}
-
-/**
  * Parses an array of strings from a comma-separated string.
  *
  * @param value - The comma-separated string to parse.
@@ -47,4 +36,4 @@ function parseString(value?: string, defaultVal = ''): string {
     return value?.trim() || defaultVal;
 }
 
-export { parseArray, parseBoolean, parseNumber, parseString };
+export { parseArray, parseBoolean, parseString };
