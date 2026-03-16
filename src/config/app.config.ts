@@ -8,16 +8,16 @@ import {
 } from '../shared/utils/config.parser';
 
 /**
- * Loads environment variables from a `.env` file based on the specified environment.
+ * Loads environment variables from a `.env.{env}` file based on the specified environment.
  *
- * This function attempts to load environment variables from a file matching the
- * provided environment name (e.g., `.env.development`). If no matching file is found,
- * it falls back to `.env`. If neither file exists, the process exits with an error.
+ * This function attempts to load environment variables from a file named `.env.{env}`
+ * (e.g., `.env.development`). If no matching file is found, it falls back to `.env`.
+ * If neither file exists, the process exits with an error.
  *
  * @param env - The environment name (e.g., 'development', 'production'). Defaults to 'development'.
  */
 function loadEnv(env = 'development') {
-    // Load environment variables from .env files default fallback to .env
+    // Look for .env.{env} first, then fall back to .env
     const envFile = [`.env.${env}`, '.env'].find((file) =>
         fs.existsSync(path.resolve(process.cwd(), file)),
     );

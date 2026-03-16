@@ -26,10 +26,14 @@ A step-by-step series of examples that tell you how to get a development environ
     ```bash
     npm install
     ```
-3.  **Create configuration files**
-    The project uses `.env` for default settings and `.production.env` or `.development.env` for environment-specific overrides. You can start by copying the `example.env` or creating your own.
+3.  **Create a configuration file**
+    The project loads environment variables from `.env.{env}` (e.g., `.env.development`, `.env.production`), falling back to `.env` if no environment-specific file is found. You can start by copying the provided example:
 
-    Example `.env`:
+    ```bash
+    cp .env.example .env.development
+    ```
+
+    Example `.env.development`:
     ```env
     APP_ID=monorift-app
     APP_ENV=development
@@ -51,31 +55,14 @@ To start the server in development mode with hot-reloading:
 npm run dev
 ```
 
-The server will typically run on http://localhost:50002 (or the port specified in your configuration).
-
-### Running CLI Commands
-
-Execute console commands using `npx tsx ./src/console.ts <command>` or directly with the compiled JavaScript file in the `dist` directory.
-
-Example:
-
-```bash
-node ./dist/console.js main/hello-world
-```
-
-Or:
-
-```bash
-npm run build
-node ./dist/console.js main/hello-world
-```
+The server will run on `http://localhost:50001` (or the port specified in your configuration).
 
 ### API Endpoints
 
-The main API endpoint is available at `http://localhost:50002/`. You can access the main action by navigating to:
+The main API endpoint is available at `http://localhost:50001/`:
 
 ```
-GET http://localhost:50002/
+GET http://localhost:50001/
 ```
 
 Response:
@@ -94,48 +81,44 @@ The project follows a structured folder layout to maintain clarity and organizat
 
 ```plaintext
 ├── src/
-│   ├── app/
-│   │   ├── config/
-│   │   │   └── app.config.ts                 # Application configuration loading and interface
-│   │   ├── modules/
-│   │   │   └── main/
-│   │   │       ├── cli/
-│   │   │       │   └── hello.cli.ts       # CLI command for "hello world"
-│   │   │       ├── controllers/           
-│   │   │       │   │   └── main.controller.ts    # Controller for main module API endpoints
-│   │   │       └── routes/
-│   │   │           └── main.route.ts        # Routes definition for the main module
-│   │   └── shared/
-│   │       ├── middlewares/
-│   │       │   ├── morgan.ts          # HTTP request logging middleware (Morgan)
-│   │       │   ├── malformed.ts       # Middleware to catch malformed request errors
-│   │       │   └── not.found.ts       # Middleware for handling 404 Not Found errors
-│   │       ├── services/
-│   │       │   ├── logger.ts          # Centralized Winston logger service
-│   │       │   ├── logger.factory.ts  # Logger factory for creating custom loggers
-│   │       └── types/
-│   │           ├── jsend.ts           # JSend response format helpers
-│   │       └── utils/
-│   │           ├── error.message.ts   # Error message formatting helpers
-│   │           ├── config.parser.ts   # Utility for parsing configuration values
-│   │           └── path.alias.ts      # Utility for resolving path aliases
-│   ├── console.ts                     # Main entry point for CLI commands
-│   ├── express.ts                     # Express application setup and middleware
-│   └── http.ts                        # Main entry point for the HTTP server (Express app)
-├── package.json                       # Project metadata and dependencies
-├── tsconfig.json                      # TypeScript configuration
-└── .example.env                       # Example env config file
-└── tsconfig.json                      # TypeScript configuration for the project
-└── eslint.config.mjs                  # ESLint configuration file
-└── .prettierrc                        # Prettier configuration file
-└── .gitignore                         # Git ignore file
+│   ├── config/
+│   │   └── app.config.ts                  # Application configuration loading and interface
+│   ├── modules/
+│   │   └── main/
+│   │       ├── commands/
+│   │       │   └── hello.command.ts       # Example command handler
+│   │       ├── handlers/
+│   │       │   └── main.handler.ts        # Request handler for main module endpoints
+│   │       └── routes/
+│   │           └── main.route.ts          # Route definitions for the main module
+│   ├── shared/
+│   │   ├── middlewares/
+│   │   │   ├── async.handler.ts           # Async error-forwarding wrapper
+│   │   │   ├── malformed.ts               # Middleware to catch malformed request errors
+│   │   │   ├── morgan.ts                  # HTTP request logging middleware (Morgan)
+│   │   │   └── not.found.ts               # Middleware for handling 404 Not Found errors
+│   │   ├── services/
+│   │   │   ├── logger.ts                  # Centralized Winston logger service
+│   │   │   └── logger.factory.ts          # Logger factory for creating custom loggers
+│   │   ├── types/
+│   │   │   └── jsend.ts                   # JSend response format helpers
+│   │   └── utils/
+│   │       ├── config.parser.ts           # Utility for parsing configuration values
+│   │       └── path.alias.ts              # Utility for resolving path aliases
+│   ├── express.ts                         # Express application setup and middleware
+│   └── http.ts                            # Main entry point for the HTTP server
+├── .env.example                           # Example environment configuration
+├── package.json                           # Project metadata and dependencies
+├── tsconfig.json                          # TypeScript configuration
+├── eslint.config.mjs                      # ESLint configuration
+└── .prettierrc                            # Prettier configuration
 ```
 
 ## Documentation
 
 For detailed documentation on various aspects of the project, refer to the following sections:
 
-- [Configuration](docs/configuration.md): Learn how to configure the application using YAML files.
+- [Configuration](docs/configuration.md): Learn how to configure the application using environment variables.
 - [Routing](docs/routing.md): Understand how routing is implemented in the application.
 - [Application Lifecycle](docs/request.lifecycle.md): Explore the lifecycle of the application from startup to shutdown.
 - [Error Handling](docs/error.handling.md): Learn about the error handling mechanisms in the project.
